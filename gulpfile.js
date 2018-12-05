@@ -8,19 +8,25 @@ const browserify = require('browserify');
 const babelify = require('babelify');
 const source = require('vinyl-source-stream');
 const buffer = require('vinyl-buffer');
+const jsonServer = require('json-server');
 const debug = require('debug')('app:gulpfile');
+
+const babelConfig = require('./babel.config');
 
 const config = {
   port: 9005,
+  apiPort: 9006,
   devBaseUrl: 'http://localhost',
   paths: {
     html: './src/*.html',
-    js: './src/**/*.js',
+    js: ['./src/**/*.{js,jsx}'],
     dist: './dist',
     mainJs: './src/main.js',
     css: [
       'node_modules/bootstrap/dist/css/bootstrap.min.css',
     ],
+    images: './src/images/*',
+    apiDb: 'db.json',
   },
 };
 
@@ -50,17 +56,12 @@ gulp.task('js', () => {
     entries: config.paths.mainJs,
     debug: true,
     extensions: ['.js', '.jsx'],
-    transform: [
-      babelify.configure({
-        presets: [
-          '@babel/env',
-          '@babel/react',
-        ],
-      }),
+    transform: [babelify.configure(babelConfig),
     ],
   });
 
   return b.bundle()
+    .on('error', debug)
     .pipe(source('bundle.js'))
     .pipe(buffer())
     .pipe(sourcemaps.init({ loadMaps: true }))
@@ -76,6 +77,15 @@ gulp.task('css', () => {
     .pipe(gulp.dest(`${config.paths.dist}/css`));
 });
 
+gulp.task('images', () => {
+  gulp.src(config.paths.images)
+    .pipe(gulp.dest(`${config.paths.dist}/images`))
+    .pipe(connect.reload());
+
+  gulp.src('./src/favicon.icon')
+    .pipe(gulp.dest(config.paths.dist));
+});
+
 gulp.task('lint', () => gulp.src(config.paths.js).pipe(lint({ config: '.eslintrc.js' })).pipe(lint.format()));
 
 gulp.task('watch', () => {
@@ -83,4 +93,14 @@ gulp.task('watch', () => {
   gulp.watch(config.paths.js, ['js', 'lint']);
 });
 
-gulp.task('default', ['html', 'js', 'css', 'lint', 'open', 'watch']);
+gulp.task('api', () => {
+  const server = jsonServer.create();
+  const router = jsonServer.router(config.paths.apiDb);
+  const middlewares = jsonServer.defaults();
+
+  server.use(middlewares);
+  server.use(router);
+  server.listen(config.apiPort);
+});
+
+gulp.task('default', ['html', 'js', 'css', 'images', 'lint', 'open', 'api', 'watch']);

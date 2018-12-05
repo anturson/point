@@ -1,0 +1,136 @@
+{
+  "entities": [
+    {
+      "id": "1",
+      "key": "entity",
+      "name": "Entity",
+      "fields": [
+        {
+          "id": "1",
+          "key": "id",
+          "name": "Id",
+          "type": {
+            "key": "string",
+            "name": "String"
+          }
+        },
+        {
+          "id": "2",
+          "key": "key",
+          "name": "Key",
+          "type": {
+            "key": "string",
+            "name": "String"
+          }
+        },
+        {
+          "id": "3",
+          "key": "name",
+          "name": "Name",
+          "type": {
+            "key": "string",
+            "name": "String"
+          }
+        },
+        {
+          "id": "4",
+          "key": "fields",
+          "name": "Fields",
+          "type": {
+            "key": "list",
+            "name": "List"
+          },
+          "srcEntity": {
+            "key": "field",
+            "name": "Field"
+          }
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "key": "field",
+      "name": "Field",
+      "fields": [
+        {
+          "id": "5",
+          "key": "id",
+          "name": "Id",
+          "type": {
+            "key": "string",
+            "name": "String"
+          }
+        },
+        {
+          "id": "6",
+          "key": "key",
+          "name": "Key",
+          "type": {
+            "key": "string",
+            "name": "String"
+          }
+        },
+        {
+          "id": "7",
+          "key": "name",
+          "name": "Name",
+          "type": {
+            "key": "string",
+            "name": "String"
+          }
+        },
+        {
+          "id": "8",
+          "key": "type",
+          "name": "Type",
+          "type": {
+            "key": "object",
+            "name": "Object"
+          },
+          "srcEntity": {
+            "key": "fieldType",
+            "name": "Field Type"
+          }
+        },
+        {
+          "id": "9",
+          "key": "srcEntity",
+          "name": "Source Entity",
+          "type": {
+            "key": "object",
+            "name": "Object"
+          },
+          "srcEntity": {
+            "key": "entity",
+            "name": "Entity"
+          }
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "key": "fieldType",
+      "name": "Field Type",
+      "fields": [
+        {
+          "id": "10",
+          "key": "id",
+          "name": "Id",
+          "type": {
+            "key": "string",
+            "name": "String"
+          }
+        },
+        {
+          "id": "11",
+          "key": "name",
+          "name": "Name",
+          "type": {
+            "key": "string",
+            "name": "String"
+          }
+        }
+      ]
+    }
+  ]
+}

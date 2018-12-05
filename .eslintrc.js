@@ -1,7 +1,7 @@
 module.exports = {
-    extends: "airbnb",
-    globals: {
-        'jQuery': true,
-        '$': true,
-    },
+  parser: "babel-eslint",
+  extends: "airbnb",
+  rules: {
+    'arrow-parens': 0,
+  },
 };

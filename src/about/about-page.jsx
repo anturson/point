@@ -5,7 +5,10 @@ import Header from '../layout/header';
 const AboutPage = () => (
   <div>
     <Header />
-    <div>About Page</div>
+    <h1>About</h1>
+    <p>
+      This page is about About
+    </p>
   </div>
 );
 
